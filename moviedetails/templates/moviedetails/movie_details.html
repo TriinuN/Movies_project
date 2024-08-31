@@ -14,7 +14,7 @@
     <img src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" alt="{{ movie.title }}">
 {% endif %}
 <p><strong>Cast:</strong> {{ movie.cast|join:", " }}</p>
- <form method="post" action="{% url 'save_movie' movie_id=movie_id %}">
+ <form method="post" action="{% url 'moviedetails:save_movie' movie_id=movie_id %}">
     {% csrf_token %}
     <input type="hidden" name="movie_title" value="{{ movie.title }}">
     <input type="hidden" name="movie_poster" value="{{ movie.poster_path }}">

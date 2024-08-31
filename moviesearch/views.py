@@ -9,6 +9,7 @@ TMDB_API_URL = 'https://api.themoviedb.org/3/search/movie'
 MOVIE_DETAIL_API_URL = 'https://api.themoviedb.org/3/movie/'
 GENRES_API_URL = 'https://api.themoviedb.org/3/genre/movie/list'
 
+
 class MovieSearchView(View):
     def get(self, request):
         form = MovieSearchForm()
@@ -47,10 +48,15 @@ class MovieSearchView(View):
             return {genre['id']: genre['name'] for genre in data['genres']}
         return {}
 
+
 class MovieDetailView(View):
     def get(self, request, movie_id):
         movie = self.get_movie_details(movie_id)
-        return render(request, 'moviesearch/movie_detail.html', {'movie': movie})
+        if movie:
+            return render(request, 'moviedetails/movie_details.html', {'movie': movie, 'movie_id': movie_id})
+        else:
+            return render(request, 'moviedetails/movie_details.html',
+                          {'error': 'Movie not found', 'movie_id': movie_id})
 
     def get_movie_details(self, movie_id):
         response = requests.get(f'{MOVIE_DETAIL_API_URL}{movie_id}', params={'api_key': TMDB_API_KEY})
@@ -59,6 +65,7 @@ class MovieDetailView(View):
             genre_names = self.get_genre_names()
             genre_list = [genre_names.get(id, 'Unknown') for id in movie.get('genres', [])]
             return {
+                'movie_id': movie.get('id'),
                 'title': movie.get('title'),
                 'year': movie.get('release_date', '')[:4],
                 'genre': ', '.join(genre_list),
