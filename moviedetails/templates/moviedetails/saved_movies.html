@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Saved Movies</title>
+</head>
+<body>
+    <h1>Saved Movies</h1>
+{% for saved_movie in saved_movies %}
+    <div>
+        <h2>{{ saved_movie.movie_title }}</h2>
+        {% if saved_movie.movie_poster %}
+            <img src="{{ saved_movie.movie_poster }}" alt="{{ saved_movie.movie_title }}">
+        {% endif %}
+    </div>
+{% empty %}
+    <p>No saved movies.</p>
+{% endfor %}
+</body>
+</html>

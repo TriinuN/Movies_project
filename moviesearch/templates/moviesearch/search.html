@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Search</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Search Movies</h1>
+    </header>
+
+    <main>
+        <section class="search-form">
+            <form method="post" action="{% url 'search_movie' %}">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Search</button>
+            </form>
+        </section>
+
+        <section class="search-results">
+            {% if movie_results %}
+                <h2>Search Results</h2>
+                <ul>
+                    {% for movie in movie_results %}
+                        <li class="movie-item">
+                            <a href="{% url 'movie_detail' movie.id %}">
+                                {% if movie.poster_path %}
+                                    <img src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" alt="{{ movie.title }}" class="movie-poster">
+                                {% else %}
+                                    <img src="{% static 'images/default_image.jpg' %}" alt="{{ movie.title }}" class="movie-poster">
+                                {% endif %}
+                                <div class="movie-info">
+                                    <strong>{{ movie.title }}</strong> ({{ movie.year }})<br>
+                                    <span>{{ movie.genre }}</span><br>
+                                    <p>{{ movie.overview|truncatewords:20 }}</p>
+                                </div>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No movies found.</p>
+            {% endif %}
+        </section>
+    </main>
+</body>
+</html>

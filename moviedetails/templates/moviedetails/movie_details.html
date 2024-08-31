@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ movie.title }}</title>
+</head>
+<body>
+    <h1>{{ movie.title }}</h1>
+<p><strong>Year:</strong> {{ movie.year }}</p>
+<p><strong>Genre:</strong> {{ movie.genre }}</p>
+<p><strong>Overview:</strong> {{ movie.overview }}</p>
+{% if movie.poster_path %}
+    <img src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" alt="{{ movie.title }}">
+{% endif %}
+<p><strong>Cast:</strong> {{ movie.cast|join:", " }}</p>
+ <form method="post" action="{% url 'save_movie' movie_id=movie_id %}">
+    {% csrf_token %}
+    <input type="hidden" name="movie_title" value="{{ movie.title }}">
+    <input type="hidden" name="movie_poster" value="{{ movie.poster_path }}">
+    <button type="submit">Save Movie</button>
+</form>
+</body>
+</html>

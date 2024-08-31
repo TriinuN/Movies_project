@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ movie.title }} - Movie Details</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <header>
+        <h1>{{ movie.title }} ({{ movie.year }})</h1>
+    </header>
+
+    <main>
+        <div class="movie-details">
+            <div class="poster">
+                {% if movie.poster_path %}
+                    <img src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" alt="{{ movie.title }}">
+                {% else %}
+                    <img src="{% static 'images/default_image.jpg' %}" alt="Default Poster">
+                {% endif %}
+            </div>
+            <div class="info">
+                <p><strong>Genre:</strong> {{ movie.genre }}</p>
+                <p><strong>Overview:</strong> {{ movie.overview }}</p>
+                {% if movie.cast %}
+                    <p><strong>Cast:</strong> {{ movie.cast|join:", " }}</p>
+                {% else %}
+                    <p><strong>Cast:</strong> Information not available</p>
+                {% endif %}
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <a href="{% url 'search_movie' %}">Back to search</a>
+    </footer>
+</body>
+</html>
+
