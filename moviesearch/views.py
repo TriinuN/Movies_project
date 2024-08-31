@@ -29,7 +29,7 @@ class MovieSearchView(View):
                     genre_names = self.get_genre_names()
                     movie_results = []
                     for movie in data['results']:
-                        genre_list = [genre_names.get(genre['id'], 'Unknown') for genre in movie.get('genres', [])]
+                        genre_list = [genre_names.get(id, 'Unknown') for id in movie.get('genre_ids', [])]
                         movie_results.append({
                             'id': movie.get('id'),
                             'title': movie.get('title'),
@@ -62,7 +62,7 @@ class MovieDetailView(View):
         if response.status_code == 200:
             movie = response.json()
             genre_names = self.get_genre_names()
-            genre_list = [genre_names.get(id, 'Unknown') for genre in movie.get('genres', [])]
+            genre_list = [genre_names.get(genre['id'], 'Unknown') for genre in movie.get('genres', [])]
             return {
                 'movie_id': movie.get('id'),
                 'title': movie.get('title'),
