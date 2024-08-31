@@ -54,6 +54,7 @@ class SaveMovieView(View):
 class SavedMoviesView(View):
     def get(self, request):
         if request.user.is_authenticated:
-            saved_movies = SavedMovie.objects.filter(user=request.user)
+            saved_movies = SavedMovie.objects.all().filter(user=request.user)
             return render(request, 'moviedetails/saved_movies.html', {'saved_movies': saved_movies})
         return redirect('login')
+

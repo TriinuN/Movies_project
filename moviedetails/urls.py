@@ -4,5 +4,5 @@ from .views import MovieDetailView, SaveMovieView, SavedMoviesView
 urlpatterns = [
     path('movie/<int:movie_id>/', MovieDetailView.as_view(), name='movie_detail'),
     path('save/<int:movie_id>/', SaveMovieView.as_view(), name='save_movie'),
-    path('saved/', SavedMoviesView.as_view(), name='saved_movies'),
+    path('saved_movie/', SavedMoviesView.as_view(), name='saved_movies'),
 ]
