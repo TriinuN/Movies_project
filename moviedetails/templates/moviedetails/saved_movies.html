@@ -1,19 +1,54 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>My Saved Movies</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saved Movies</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            color: #333;
+        }
+        .movie-item {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        .movie-item img {
+            max-width: 150px;
+            margin-right: 20px;
+            border-radius: 4px;
+        }
+        .movie-item h2 {
+            margin: 0;
+            font-size: 1.5em;
+            color: #333;
+        }
+        .movie-item p {
+            margin: 5px 0;
+            color: #555;
+        }
+    </style>
 </head>
 <body>
     <h1>Saved Movies</h1>
-{% for saved_movie in saved_movies %}
-    <div>
-        <h2>{{ saved_movie.movie_title }}</h2>
-        {% if saved_movie.movie_poster %}
-            <img src="{{ saved_movie.movie_poster }}" alt="{{ saved_movie.movie_title }}">
-        {% endif %}
-    </div>
-{% empty %}
-    <p>No saved movies.</p>
-{% endfor %}
+    {% for saved_movie in saved_movies %}
+        <div class="movie-item">
+            <h2>{{ saved_movie.movie_title }}</h2>
+            {% if saved_movie.movie_poster %}
+                <img src="https://image.tmdb.org/t/p/w500{{ saved_movie.movie_poster }}" alt="{{ saved_movie.movie_title }}">
+            {% endif %}
+        </div>
+    {% empty %}
+        <p>No saved movies.</p>
+    {% endfor %}
 </body>
 </html>

@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 import requests
 from django.views import View
@@ -52,9 +53,9 @@ class SaveMovieView(View):
 
 
 class SavedMoviesView(View):
+    @login_required
     def get(self, request):
-        if request.user.is_authenticated:
-            saved_movies = SavedMovie.objects.all().filter(user=request.user)
-            return render(request, 'moviedetails/saved_movies.html', {'saved_movies': saved_movies})
-        return redirect('login')
-
+        if not request.user.is_authenticated:
+            print("User is not authenticated")
+        saved_movies = SavedMovie.objects.filter(user=request.user)
+        return render(request, 'moviedetails/saved_movies.html', {'saved_movies': saved_movies})
