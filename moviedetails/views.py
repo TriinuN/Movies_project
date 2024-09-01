@@ -14,7 +14,7 @@ class MovieDetailView(View):
     def get(self, request, movie_id):
         movie = self.get_movie_details(movie_id)
         if movie:
-            return render(request, 'moviedetails/movie_details.html', {'movie': movie})
+            return render(request, 'moviedetails/movie_details.html', {'movie': movie_id})
         else:
             return render(request, 'moviedetails/movie_details.html', {'error': 'Movie not found'})
 
@@ -28,7 +28,8 @@ class MovieDetailView(View):
                 'genre': ', '.join(genre['name'] for genre in movie.get('genres', [])),
                 'overview': movie.get('overview'),
                 'poster_path': movie.get('poster_path'),
-                'cast': self.get_movie_cast(movie_id)
+                'cast': self.get_movie_cast(movie_id),
+                'id': movie.get('id')
             }
         return None
 
