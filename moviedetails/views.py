@@ -46,7 +46,7 @@ class SaveMovieView(View):
             SavedMovie.objects.create(
                 user=request.user,
                 movie_id=movie_id,
-                movie_title=request.POST.get('movie_title'),
+                movie_title=request.data.get('movie_title'),
                 movie_poster=request.POST.get('movie_poster')
             )
         return redirect('movie_detail', movie_id=movie_id)
